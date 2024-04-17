@@ -9,9 +9,10 @@ function Form(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     setWelcomeMessage(`Benvingut, ${firstName} ${lastName}`);
+    props.onFormSubmit();
+    props.setPlacesDisponibles(props.placesActuals - 1);
   };
 
-  // Determinem el títol del formulari basat en el valor de tipusEstudiantSelect
   let formTitle = "";
   if (props.tipusEstudiantSelect === "no-graduat") {
     formTitle = "Detalls d'estudiant no graduat";
@@ -33,7 +34,6 @@ function Form(props) {
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text"
           name="fname"
-          value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
         />
         <br />
@@ -45,7 +45,6 @@ function Form(props) {
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text"
           name="lname"
-          value={lastName}
           onChange={(e) => setLastName(e.target.value)}
         />
         <br />
@@ -65,6 +64,9 @@ function Form(props) {
 
 Form.propTypes = {
   tipusEstudiantSelect: PropTypes.string.isRequired,
+  onFormSubmit: PropTypes.func.isRequired,
+  setPlacesDisponibles: PropTypes.func.isRequired,
+  placesActuals: PropTypes.number.isRequired,
 };
 
 export default Form;

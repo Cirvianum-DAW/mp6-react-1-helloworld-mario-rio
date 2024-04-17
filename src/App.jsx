@@ -2,10 +2,22 @@ import React, { useState } from "react";
 import Form from "./components/Form";
 
 function App() {
-  const [tipusEstudiant, setTipusEstudiant] = useState("no-graduat"); // Afegim la variable d'estat tipusEstudiant
+  const [tipusEstudiant, setTipusEstudiant] = useState("no-graduat");
+  const [places, setPlaces] = useState(100); // Variable d'estat per a les places
+
   const handleChange = (e) => {
     setTipusEstudiant(e.target.value);
   };
+
+  const handleFormSubmit = () => {
+    // Actualitzar les places restants quan es submit el formulari
+    setPlaces(places - 1);
+  };
+
+  const setPlacesDisponibles = (updatedPlaces) => {
+    setPlaces(updatedPlaces);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center gap-5 h-screen">
       <div className="tipusEstudiant">
@@ -19,7 +31,13 @@ function App() {
           <option value="graduat">Graduat</option>
         </select>
       </div>
-      <Form tipusEstudiantSelect={tipusEstudiant} />
+      <Form
+        tipusEstudiantSelect={tipusEstudiant}
+        onFormSubmit={handleFormSubmit}
+        setPlacesDisponibles={setPlacesDisponibles}
+        placesActuals={places}
+      />
+      <p>Places restants: {places}</p>{" "}
     </div>
   );
 }
