@@ -9,10 +9,11 @@ function Form(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     setWelcomeMessage(`Benvingut, ${firstName} ${lastName}`);
-    props.onFormSubmit();
-    props.setPlacesDisponibles(props.placesActuals - 1);
+    props.onFormSubmit(); // Cridar la funció onFormSubmit passada com a prop
+    props.setPlacesDisponibles(props.placesActuals - 1); // Actualitzar les places disponibles
   };
 
+  // Determinem el títol del formulari basat en el valor de tipusEstudiantSelect
   let formTitle = "";
   if (props.tipusEstudiantSelect === "no-graduat") {
     formTitle = "Detalls d'estudiant no graduat";
@@ -58,6 +59,8 @@ function Form(props) {
           {welcomeMessage}
         </label>
       </form>
+      <p>Places restants: {props.placesActuals}</p>{" "}
+      {/* Mostrar el nombre de places restants */}
     </div>
   );
 }

@@ -3,20 +3,27 @@ import Form from "./components/Form";
 
 function App() {
   const [tipusEstudiant, setTipusEstudiant] = useState("no-graduat");
-  const [places, setPlaces] = useState(100); // Variable d'estat per a les places
+  const [placesNoGraduats, setPlacesNoGraduats] = useState(60); // Places per a No-Graduats
+  const [placesGraduats, setPlacesGraduats] = useState(40); // Places per a Graduats
 
   const handleChange = (e) => {
     setTipusEstudiant(e.target.value);
   };
 
   const handleFormSubmit = () => {
-    // Actualitzar les places restants quan es submit el formulari
-    setPlaces(places - 1);
+    tipusEstudiant === "no-graduat"
+      ? setPlacesNoGraduats(placesNoGraduats - 1)
+      : setPlacesGraduats(placesGraduats - 1);
   };
 
   const setPlacesDisponibles = (updatedPlaces) => {
-    setPlaces(updatedPlaces);
+    tipusEstudiant === "no-graduat"
+      ? setPlacesNoGraduats(updatedPlaces)
+      : setPlacesGraduats(updatedPlaces);
   };
+
+  // Suma de places disponibles per als estudiants graduats i no graduats
+  const placesTotalsDisponibles = placesNoGraduats + placesGraduats;
 
   return (
     <div className="flex flex-col items-center justify-center gap-5 h-screen">
@@ -35,9 +42,13 @@ function App() {
         tipusEstudiantSelect={tipusEstudiant}
         onFormSubmit={handleFormSubmit}
         setPlacesDisponibles={setPlacesDisponibles}
-        placesActuals={places}
+        placesActuals={
+          tipusEstudiant === "no-graduat" ? placesNoGraduats : placesGraduats
+        }
       />
-      <p>Places restants: {places}</p>{" "}
+      <p>Places restants per a No-Graduats: {placesNoGraduats}</p>
+      <p>Places restants per a Graduats: {placesGraduats}</p>
+      <p>Places totals disponibles: {placesTotalsDisponibles}</p>
     </div>
   );
 }
